@@ -67,6 +67,27 @@ class Game
  end
 
  def turn
+   input = self.current_player.move(self.board)
+
+   until self.board.valid_move?(input)
+     input = self.current_player.move(self.board)
+   end
+
+   self.board.update(input, self.current_player)
+
+   self.current_player
+ end
+
+ def play
+   until self.over?
+     self.turn
+   end
+
+   if self.winner
+     puts "Congratulations #{self.winner}!"
+   else
+     puts "Cat's Game!"
+   end
 
  end
 

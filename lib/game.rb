@@ -56,7 +56,7 @@ class Game
    if self.over?
      if self.draw?
        nil
-     elsif self.board.cells[self.won?.first] == self.player_1.token
+     elsif self.won? && self.board.cells[self.won?.first] == self.player_1.token
        self.player_1.token
      else
        self.player_2.token
@@ -67,6 +67,8 @@ class Game
  end
 
  def turn
+   self.board.display
+   puts "Player #{self.current_player.token}, choose a position (1-9):"
    input = self.current_player.move(self.board)
 
    until self.board.valid_move?(input)
@@ -79,6 +81,16 @@ class Game
  end
 
  def play
+   puts "Welcome to Tic Tac Toe!"
+   puts "Please choose the number of players (0, 1, 2):"
+   input = gets.strip
+   if input == "1"
+     self.player_2 = Players::Computer.new("O")
+   end
+   if input == "0"
+     self.player_1 = Players::Computer.new("X")
+     self.player_2 = Players::Computer.new("O")
+   end
    until self.over?
      self.turn
    end

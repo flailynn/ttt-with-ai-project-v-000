@@ -5,8 +5,8 @@ module Players
     CORNER_LOCATIONS = ["1", "3", "7", "9"]
 
     def move(board)
-      if board.valid_move?("5")
-        input = "5"
+      if board.turn_count == 0
+        input = FIRST_TURN_STRATEGIES.sample.to_i
       else
         input = rand(1..9)
       end

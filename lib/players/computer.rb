@@ -13,6 +13,7 @@ module Players
         input = rand(1..9)
       end
 
+      
       until board.valid_move?(input.to_s)
         input = input = rand(1..9)
       end

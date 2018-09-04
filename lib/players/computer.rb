@@ -8,10 +8,7 @@ module Players
     def move(board)
       if board.turn_count == 0
         input = FIRST_TURN_STRATEGIES.sample.to_i
-
-
-
-        end
+        self.set_strategy
       else
         input = rand(1..9)
       end

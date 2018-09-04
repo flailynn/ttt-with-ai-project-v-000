@@ -68,7 +68,13 @@ class Game
 
  def turn
    self.board.display
-   puts "Player #{self.current_player.token}, choose a position (1-9):"
+   if self.computers_turn?
+     puts "AI's turn. Please wait..."
+     sleep(1)
+   else
+     puts "Player #{self.current_player.token}, choose a position (1-9):" unless self.computers_turn?
+   end
+
    input = self.current_player.move(self.board)
 
    until self.board.valid_move?(input)
@@ -81,16 +87,9 @@ class Game
  end
 
  def play
-   puts "Welcome to Tic Tac Toe!"
-   puts "Please choose the number of players (0, 1, 2):"
-   input = gets.strip
-   if input == "1"
-     self.player_2 = Players::Computer.new("O")
-   end
-   if input == "0"
-     self.player_1 = Players::Computer.new("X")
-     self.player_2 = Players::Computer.new("O")
-   end
+
+   self.start
+
    until self.over?
      self.turn
    end
@@ -99,6 +98,37 @@ class Game
      puts "Congratulations #{self.winner}!"
    else
      puts "Cat's Game!"
+   end
+
+ end
+
+ # This method determines if the player for the current turn is a computer.
+ def computers_turn?
+   self.current_player.class == Players::Computer ? true : false
+ end
+
+ def start
+   puts "Welcome to Tic Tac Toe!"
+   puts "Please choose the number of players (0, 1, 2):"
+   input = gets.strip
+
+   if input == "0"
+     self.player_1 = Players::Computer.new("X")
+     self.player_2 = Players::Computer.new("O")
+   end
+
+   if input == "1"
+     player_selection = ""
+     puts "Enter \"X\" to be Player 1 or \"O\" to be Player 2:"
+     until player_selection == "X" || player_selection == "O"
+       player_selection = gets.strip.upcase!
+     end
+
+     if player_selection == "X"
+       self.player_2 = Players::Computer.new("O")
+     else
+       self.player_1 = Players::Computer.new("X")
+     end
    end
 
  end

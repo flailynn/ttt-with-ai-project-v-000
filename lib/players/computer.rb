@@ -8,13 +8,9 @@ module Players
     def move(board)
       if board.turn_count == 0
         input = FIRST_TURN_STRATEGIES.sample.to_i
-        if input == 5
-          @strategy = "center"
-        else
-          @strategy = "corner"
-        end
-          
-          
+
+
+
         end
       else
         input = rand(1..9)
@@ -28,4 +24,13 @@ module Players
 
     end
   end
+
+  def set_strategy(input)
+    if input == 5
+      @strategy = "center"
+    else
+      @strategy = "corner"
+    end
+  end
+
 end
